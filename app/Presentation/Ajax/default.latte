@@ -1,0 +1,23 @@
+{block content}
+
+<div id="banner">
+	<h1 n:block=title>Upload Obrázků</h1>
+</div>
+   <div id="current-time"></div>
+
+<div id="content">
+{control imageUploadForm}
+
+
+	<h2>Nahrané obrázky:</h2>
+{* <ul>
+    {foreach $uploads as $file}
+        <li><img src="{$basePath}/uploads/{$file}" alt="{$file}" width="100"> {$file}</li>
+    {/foreach}
+</ul> *}
+
+ <button id="ajaxButton">Proveď AJAX požadavek</button>
+
+<a n:href="Home:">Zpět</a>
+</div>
+

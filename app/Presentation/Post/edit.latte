@@ -1,0 +1,19 @@
+{block content}
+
+
+
+
+<div id="banner">
+	<h1 n:block=title>Congratulations!</h1>
+</div>
+
+<div id="content">
+
+    <h2>{$post->title}</h2>
+    <p>{$post->content}</p>
+
+    {control postForm}
+
+    <a n:href="Home:">Zpět na hlavní stránku</a>
+
+</div>

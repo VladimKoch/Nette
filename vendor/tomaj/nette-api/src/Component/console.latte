@@ -1,0 +1,128 @@
+<h2>Api Web Console</h2>
+
+<div n:if="$handler->description() || $handler->deprecated() || $handler->tags()">
+    <span n:if="$handler->deprecated()" class="btn btn-sm btn-danger">API is deprecated</span>
+    <span n:foreach="$handler->tags() as $tag" class="label label-info">{$tag}</span>
+    <p n:if="$handler->description()">{$handler->description()}</p>
+</div>
+
+{ifset $response}
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Request</h3>
+            <p>
+                <span class="label label-default">{$response->getMethod()}</span>
+                <code>{$response->getUrl()}</code>
+            </p>
+            <p>
+                {if $response->getPostFields()}
+                <b>POST FIELDS:</b>
+            <pre>{foreach $response->getPostFields() as $key => $field}
+                        {spaceless}
+                    {if is_object($field) && get_class($field) === 'CURLFile'}
+                        {$key}=@{$field->getFilename()} ({$field->getMimeType()}) [{$field->getPostFilename()}] (file)
+                    {else}
+                        {$key}={$field}
+                    {/if}
+                {/spaceless}
+                    {/foreach}</pre>
+            {/if}
+                {if $response->getRawPost()}
+                <b>RAW POST</b>
+                <pre>{$response->getRawPost()}</pre>
+            {/if}
+                {if $response->getGetFields()}
+                <b>GET:</b>
+                <pre>{foreach $response->getGetFields() as $key => $field}
+                         {spaceless}
+                        {$key}={$field}
+                    {/spaceless}
+                    {/foreach}</pre>
+            {/if}
+                {if $response->getCookieFields()}
+                <b>COOKIES:</b>
+                <pre>{foreach $response->getCookieFields() as $key => $value}
+                        {spaceless}
+                        {$key}={$value}
+                    {/spaceless}
+                    {/foreach}</pre>
+            {/if}
+                {if $response->getHeaders()}
+                <b>HEADERS:</b>
+                <pre>{implode("\n", $response->getHeaders())|noescape}</pre>
+            {/if}
+            </p>
+
+            <hr>
+
+            <h3>Response</h3>
+            <p>
+                Took: {$response->getResponseTime()}ms
+                <br>
+                {if $response->isError()}
+                    <b>Error {$response->getErrorNumber()}</b>
+                    {$response->getErrorMessage()}
+                    <br>
+                    <b>Headers:</b><pre>{$response->getResponseHeaders()}</pre>
+                {else}
+                    <span class="label label-default">{$response->getResponseCode()}</span>
+                    <br>
+                    <br>
+                    <b>Headers:</b><pre>{$response->getResponseHeaders()}</pre>
+                    {if strpos($response->getFormattedJsonBody(), '<!-- Tracy Debug Bar -->')}
+                        <b>Rendered body:</b><br><iframe width="100%" onload="this.style.height = Math.max(400, this.contentWindow.document.documentElement.scrollHeight) + 'px'" srcdoc="{$response->getFormattedJsonBody()}"></iframe>
+                    {/if}
+                    <table style="margin-bottom: 10px; width: 100%;">
+                        <tbody>
+                        <tr>
+                            <td valign="bottom"><b>Body:</b></td>
+                            <td><button class="btn btn-info btn-sm pull-right" onclick="copyToClipboard('.copy-content')">Copy content</button></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <pre class="copy-content">{$response->getFormattedJsonBody()}</pre>
+                {/if}
+            </p>
+
+            <hr>
+        </div>
+    </div>
+{/ifset}
+
+<div class="row">
+    <div class="col-md-12">
+        {control consoleForm}
+    </div>
+</div>
+
+<script>
+    function copyToClipboard(target) {
+        const btn = event.target;
+        let text = document.body.querySelector(target).innerText;
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(text);
+        } else {
+            fallbackCopyTextToClipboard(text);
+        }
+        changeTextTemporarily(btn);
+
+    }
+    function fallbackCopyTextToClipboard(text) {
+        const textArea = Object.assign(document.createElement('textarea'), {
+            value: text, style: 'position:fixed;top:0;left:0;'
+        });
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        document.execCommand('copy');
+        textArea.remove();
+    }
+
+    function changeTextTemporarily(buttonElement) {
+        const originalText = buttonElement.innerText;
+        buttonElement.innerText = 'Copied!';
+        setTimeout(() => {
+            buttonElement.innerText = originalText;
+        }, 2000);
+    }
+</script>

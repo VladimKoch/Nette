@@ -1,0 +1,28 @@
+parameters:
+
+
+application:
+	mapping: App\Presentation\*\**Presenter
+	# Api: Tomaj\NetteApi\Presenters\*Presenter
+	errorPresenter:
+		4xx: Error:Error4xx
+		5xx: Error:Error5xx
+
+
+database:
+	dsn: 'mysql:host=127.0.0.1;dbname=web'
+	user: 'root'
+	password:
+
+
+latte:
+	strictTypes: yes
+	strictParsing: yes
+	extensions:
+		- App\Presentation\Accessory\LatteExtension
+
+
+di:
+	export:
+		parameters: no
+		tags: no

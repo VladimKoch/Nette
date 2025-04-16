@@ -1,0 +1,31 @@
+services:
+	- App\Core\RouterFactory::createRouter
+	- App\Model\ArticleManager
+	- App\Model\Auth
+	- App\Model\UserManager
+	- App\Model\ImageUploadFormFactory
+	- App\Model\PostManager
+	- App\Model\CalculatorManager
+	- App\MyApi\v1\Handlers\UsersListingHandler
+	- Tomaj\NetteApi\Link\ApiLink
+	- Tomaj\NetteApi\Misc\IpDetector
+	- App\MyApi\v1\Forms\ImgForm
+	# - Tomaj\NetteApi\Response\JsonApiResponse
+	apiOutputConfigurator: Tomaj\NetteApi\Output\Configurator\DebuggerConfigurator
+	apiErrorHandler: Tomaj\NetteApi\Error\DefaultErrorHandler
+	apiDecider:
+		factory: Tomaj\NetteApi\ApiDecider
+		setup:
+				- addApi(\Tomaj\NetteApi\EndpointIdentifier('GET', 1, 'users'), \App\MyApi\v1\Handlers\UsersListingHandler(), \Tomaj\NetteApi\Authorization\NoAuthorization())
+				# - addApi(\Tomaj\NetteApi\EndpointIdentifier('POST', 1, 'users', 'send-email'), \App\MyApi\v1\Handlers\SendEmailHandler(), \Tomaj\NetteApi\Authorization\BearerTokenAuthorization())
+
+
+	
+
+search:
+	-	in: %appDir%
+		classes:
+			- *Facade
+			- *Factory
+			- *Repository
+			- *Service

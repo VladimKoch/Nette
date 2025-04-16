@@ -1,0 +1,16 @@
+{block content}
+
+    <div id="banner">
+	<h1 n:block=title>Data</h1>
+</div>
+    <div id="content">
+    <ul>
+        {foreach $datas as $data}
+            <li><a n:href="Api:show $data['id']">{$data['id']}: {$data['title']}</a></li>
+        {/foreach}
+    </ul>
+
+    <a n:href="Home:" class="text-warning">Zpět</a>
+    </div>
+
+{/block}

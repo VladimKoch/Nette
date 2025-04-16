@@ -1,0 +1,24 @@
+{block content}
+
+<div id="banner">
+	<h1 n:block=title>Congratulations!</h1>
+</div>
+   <div id="current-time"></div>
+   
+
+<div id="content">
+
+    <h2>{$post->title}</h2>
+    <p>{$post->content}</p>
+    <p><a n:href="Home:">zpět na příspěvky</a></p>
+   {if $user->isLoggedIn()} <p><a n:href="Edit:default $post->id">Upravit příspěvek</a></p>{/if}
+    <h2>Vložit nový komentář</h2>
+    {control commentForm}
+
+    <h2>Komentáře:</h2>
+    <div n:foreach="$comments as $comment">
+    <strong>{$comment->name}</strong>
+    <p>{$comment->content}</p>
+    </div>
+
+</div>

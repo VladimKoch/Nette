@@ -1,0 +1,34 @@
+{block content}
+
+<div id="banner">
+	<h1 n:block=title>Users</h1>
+</div>
+<div id="content">
+   {foreach $response->getPayload()['users'] as $item}
+    <div>
+    	<table>
+        <thead>
+            <tr>
+                <th>Jméno</th>
+                <th>Email</th>
+                <th>Role</th>
+            </tr>
+        </thead>
+        <tbody id="myTable">
+            <tr>
+                <td>{$item['username']}</td>
+                <td>{$item['email']}</td>
+                <td>{$item['roles']}</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+{/foreach}
+
+<br>
+
+
+
+<a n:href="Home:">Zpět</a>
+</div>
+

@@ -1,0 +1,69 @@
+{* This is the welcome page, you can delete it *}
+
+{block content}
+<div id="banner">
+	<h1 n:block=title>Congratulations!</h1>
+</div>
+
+   <div id="current-time"></div>
+<div id="content">
+	<h2 n:if="$user->loggedIn">Ahoj {$username}</h2>
+	{if !$user->isLoggedIn()}<a n:href="Sign:login">Login</a> | <a n:href="Sign:sign">SginUp</a>
+	{else}<a n:href="Sign:out">Odhlásit se</a>|<a n:href="Table:default">Tabulka</a>|<a n:href="Api:default">Api</a>|<a n:href="Calculator:default">Kalkulačka</a>|<a n:href="ImgApi:default">ImgConvert</a>|<a n:href="Tomaj:default">Users</a>{/if}
+	
+	<br>
+	<br>
+
+	<div class="pagination">{if $page > 1}
+
+				<a n:href="default, 1">První</a>
+				&nbsp;|&nbsp;
+				<a n:href="default, $page-1">Předchozí</a>
+				&nbsp;|&nbsp;
+				{/if}Stránka {$page} z {$lastPage}
+
+				{if $page < $lastPage}
+				&nbsp;|&nbsp;
+					<a n:href="default, $page+1">Další</a>&nbsp;|&nbsp;<a n:href="default, $lastPage">Poslední</a>
+				{/if}
+	</div>
+
+	<br>
+
+	<div n:foreach="$posts as $post" class="posts">
+		<a n:href="Post:default $post->id">{$post->title}</a>
+		<p>{$post->content}</p>
+		<br>
+	</div>
+
+	<div>
+	{if $user->isLoggedIn()}<a n:href="Post:new">Vložit nový příspěvek</a>{/if}
+	</div>
+
+
+
+
+	
+	<a n:href="click!" class="btn btn-primary ajax">Zapamatuj čas</a>
+
+
+
+
+
+
+	
+	{snippet mySnippet}
+		<div>
+		<p>čas:{$time}</p>
+		</div>
+	{/snippet}
+
+
+
+</div>
+
+
+
+
+
+

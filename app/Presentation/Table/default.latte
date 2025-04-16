@@ -1,0 +1,36 @@
+{block content}
+<div id="banner">
+	<h1 n:block=title>Tabulka</h1>
+</div>
+   <div id="current-time"></div>
+   
+
+<div id="content">
+<h2>Filtr pro vyhledávání</h2>
+<p>Do pole pro zadání zadejte vyhledávaný výraz, který hledáte v tabulce -jména, příjmení nebo e-maily:</p>
+<input id="myInput" type="text" placeholder="Vyhledávání..">
+	<table>
+        <thead>
+            <tr>
+                <th>Jméno</th>
+                <th>Příjmení</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody id="myTable">
+            <tr>
+                <td>John</td>
+                <td>Doe</td>
+                <td>john@example.com</td>
+            </tr>
+            <tr>
+                <td>Igor</td>
+                <td>Randal</td>
+                <td>iRA@gmail.com</td>
+            </tr>
+        </tbody>
+    </table>
+<a n:href="Home:default">Zpět</a>
+</div>
+
+

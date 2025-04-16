@@ -1,0 +1,12 @@
+{block content}
+<div id="banner">
+	<h1 n:block=title>Kalkulačka!</h1>
+</div>
+
+<div id="content">
+	<h2 n:ifset=$result>Výsledek je: {$result}</h2>
+	{control calculatorForm}
+
+
+	<a n:href="Home:default">Zpět</a>
+</div>

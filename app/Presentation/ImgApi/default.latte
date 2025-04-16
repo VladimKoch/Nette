@@ -1,0 +1,37 @@
+{block content}
+<div id="banner">
+	<h1 n:block=title>Img</h1>
+</div>
+
+<div id="content">
+    
+    
+ {control imageUploadForm}
+
+
+ 	<h2>Nahrané obrázky PNG:</h2>
+<ul>
+    {foreach $uploads as $file}
+    <div class="row">
+    <div class="col-md-2">
+        <li class=""><img src="{$basePath}/uploads//png/{$file}" class="img-fluid" alt="{$file}" width="100"> {$file}</li>
+    </div>
+    </div>
+    {/foreach}
+</ul>
+ 	<h2>Nahrané obrázky JPG:</h2>
+<ul>
+    {foreach $uploadsImgs as $fileImg}
+    <div class="row">
+    <div class="col-md-2">
+        <li><img src="{$basePath}/uploads/img/{$fileImg}" class="img-fluid" alt="{$fileImg}" width="100"> {$fileImg}</li>
+    </div>
+    </div>
+    {/foreach}
+</ul>
+
+
+    <a n:href="Home:default">Zpět</a>
+
+</div>
+{/block}

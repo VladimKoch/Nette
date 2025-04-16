@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<link rel="stylesheet" href="{$basePath}/css/bootstrap-icons.css">
+	<link rel="stylesheet" href="{$basePath}/css/bootstrap.min.css">
+	<link rel="stylesheet" href="{$basePath}/css/bootstrap.min.css.map">
+	<link rel="stylesheet" href="{$basePath}/css/style.css">
+	{* <link rel="stylesheet" href="{$basePath}/js/jq.css"> *}
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://unpkg.com/naja@2/dist/Naja.min.js"></script>
+	{* <script src="../node_modules/naja/dist/Naja.js"></script> *}
+	<script src="https://unpkg.com/nette-forms@3/src/assets/netteForms.min.js"></script>
+	<script src="https://unpkg.com/nette.ajax.js"></script>
+	{* <script src="{$basePath}js/jq.js"></script> *}
+	{* <script src="{$basePath}/jq/jquery.js"></script> *}
+	{* <script src="{$basePath}/js/naja.js"></script> *}
+
+
+	<title>{ifset title}{include title|stripHtml} | {/ifset}Nette Web</title>
+</head>
+
+<body>
+
+
+	{include content}
+	{* <div n:snippet="flashes" id="flashes"> *}
+	{foreach $flashes as $flash}
+	 	<div class="alert alert-success">{$flash->message}</div>
+	{/foreach}
+
+
+
+	
+
+	
+	<script>
+	$(function(){
+		$.nette.init();
+	})
+	</script>
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const options = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
+            document.getElementById('current-time').textContent = now.toLocaleTimeString('cs-CZ', options);
+        }
+
+        setInterval(updateTime, 1000); // Aktualizace každou sekundu
+        updateTime(); // Inicializace při načtení stránky
+    </script>
+		
+</body>
+
+</html>
