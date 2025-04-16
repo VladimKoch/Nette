@@ -4,9 +4,7 @@
 namespace App\MyApi\v1\Handlers;
 
 use Nette;
-use Tomaj\NetteApi\Handlers\BaseHandler;
-use Tomaj\NetteApi\Response\JsonApiResponse;
-use Tomaj\NetteApi\Response\ResponseInterface;
+
 
 class UsersRepository
 {
