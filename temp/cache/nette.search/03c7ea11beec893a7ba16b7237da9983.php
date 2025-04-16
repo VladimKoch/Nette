@@ -50,7 +50,7 @@ return array (
     'App\\MyApi\\v1\\Forms\\ImgForm' => 
     array (
       0 => 'C:\\xampp\\htdocs\\web\\app\\MyApi\\v1\\Forms\\ImgForm.php',
-      1 => 1744722931,
+      1 => 1744786258,
     ),
     'App\\MyApi\\v1\\Handlers\\ImgHandler' => 
     array (
@@ -76,11 +76,6 @@ return array (
     array (
       0 => 'C:\\xampp\\htdocs\\web\\app\\Presentation\\Accessory\\LatteExtension.php',
       1 => 1738539948,
-    ),
-    'App\\Presentation\\Ajax\\AjaxPresenter' => 
-    array (
-      0 => 'C:\\xampp\\htdocs\\web\\app\\Presentation\\Ajax\\AjaxPresenter.php',
-      1 => 1744293823,
     ),
     'App\\Presentation\\Api\\ApiPresenter' => 
     array (
@@ -112,15 +107,10 @@ return array (
       0 => 'C:\\xampp\\htdocs\\web\\app\\Presentation\\Home\\HomePresenter.php',
       1 => 1744115866,
     ),
-    'App\\Presentation\\Img\\ImgPresenter' => 
-    array (
-      0 => 'C:\\xampp\\htdocs\\web\\app\\Presentation\\Img\\ImgPresenter.php',
-      1 => 1744720778,
-    ),
     'App\\Presentation\\ImgApi\\ImgApiPresenter' => 
     array (
       0 => 'C:\\xampp\\htdocs\\web\\app\\Presentation\\ImgApi\\ImgApiPresenter.php',
-      1 => 1744723745,
+      1 => 1744786207,
     ),
     'App\\Presentation\\Post\\PostPresenter' => 
     array (
