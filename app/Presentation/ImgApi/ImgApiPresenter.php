@@ -38,7 +38,7 @@ final class ImgApiPresenter extends Nette\Application\UI\Presenter
         $this->template->uploadsImgs = array_diff(scandir($this->uploadDirImg), ['.', '..']);
     }
 
-    protected function createComponentImageUploadForm(string $name): ?IComponent
+    protected function createComponentImageUploadForm(): ?IComponent
     {   
         $form = $this->imgForm->create();
 
