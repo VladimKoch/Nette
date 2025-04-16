@@ -20,10 +20,17 @@ class ImgForm
             ->setRequired('Prosím, nahrajte obrázek.')
             ->addRule(Form::Image, 'Soubor musí být obrázek.');
 
-        $form->addSubmit('submitBtn', 'Ulož jako JPG');
-        $form->addSubmit('convertBtn', 'Převeď a stáhni jako PNG');
-        $form->addSubmit('savePngBtn', 'Převeď a ulož jako PNG');
+        $form->addSubmit('submitBtn', 'Ulož jako JPG')
+        ->onClick[] = [$this, 'submitButtonPressed'];
+
+        $form->addSubmit('convertBtn', 'Převeď a stáhni jako PNG')
+        ->onClick[] = [$this, 'convertButtonPressed'];
+
+        $form->addSubmit('savePngBtn', 'Převeď a ulož jako PNG')
+        ->onClick[] = [$this, 'savePngButtonPressed'];
 
         return $form;
     }
+
+    
 }

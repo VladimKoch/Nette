@@ -40,26 +40,34 @@ final class ImgApiPresenter extends Nette\Application\UI\Presenter
 
     protected function createComponentImageUploadForm(): ?IComponent
     {   
-        $form = $this->imgForm->create();
-
-        $form->onSuccess[] = function ($form) {
-            $values = $form->getValues();
-            $file = $this->getHttpRequest();
-
-            // echo'<pre>';
-            // print_r($values);
-            // echo'</pre>';
-            // die;
      
-                if(isset($file->post['submitBtn']))
-                {   
 
-                     /**
-                    * Uložení do složky www/uploads/img
-                    */
+        $form = new Form;
+
+        $form->addUpload('image', 'Nahrajte obrázek:')
+            ->setRequired('Prosím, nahrajte obrázek.')
+            ->addRule(Form::Image, 'Soubor musí být obrázek.');
+
+        $form->addSubmit('submitBtn', 'Ulož jako JPG')
+        ->onClick[] = [$this, 'submitButtonPressed'];
+
+        $form->addSubmit('convertBtn', 'Převeď a stáhni jako PNG')
+        ->onClick[] = [$this, 'convertButtonPressed'];
+
+        $form->addSubmit('savePngBtn', 'Převeď a ulož jako PNG')
+        ->onClick[] = [$this, 'savePngButtonPressed'];
+
+        return $form;
+    }
+
+    public function submitButtonPressed(Nette\Forms\Controls\Button $button, $data)
+    {
+             /**
+            * Uložení do složky www/uploads/img
+            */
 
                     // Uložení obrázku
-                    $image = $values->image;
+                    $image = $data->image;
              
                     //Kontrola jestli Obrázek je správně nahrán a přesunutí do složky
                     if ($image->isOk()) {
@@ -69,41 +77,44 @@ final class ImgApiPresenter extends Nette\Application\UI\Presenter
                     } else {
                         $this->flashMessage('Nastala chyba při nahrávání obrázku.', 'error');
                     }
+    }
+
+    public function convertButtonPressed(Nette\Forms\Controls\Button $button, $data)
+    {
+        /**
+        * Stažní ve formátu PNG
+        */
+
+        // Načtení JPEG/JPG obrázku
+            $fileImg = $data->image;
+
+             $image = Image::fromFile($fileImg->getTemporaryFile());
+
+        // Ověření, že je soubor nahrán a má správný typ
+            if (!$fileImg || $fileImg->isOK() && $fileImg->getContentType() !== 'image/jpeg'&& $fileImg->getContentType() !== 'image/jpg') 
+            {
+                throw new BadRequestException('Invalid image file');
+            }
+
+        // Uložení obrázku ve formátu PNG do dočasného souboru
+            $tmpFile = tempnam(sys_get_temp_dir(), 'image_') . '.png';
+
+            $image->save($tmpFile, 100); // 100 je kvalita PNG
+
+        // Získání původního názvu obrázku
+            $basename = pathinfo($fileImg->getUntrustedName(), PATHINFO_FILENAME);
+
+        // Vracení PNG obrázku jako odpověď
+            $this->sendResponse(new FileResponse($tmpFile, $basename .'.png','image/png'));
+    }
+
+    public function savePngButtonPressed(Nette\Forms\Controls\Button $button, $data)
+    {
+        /**
+        * Uložení do složky www/uploads/png
+        */
                     
-                }elseif(isset($file->post['convertBtn']))
-                {   
-
-                     /**
-                    * Stažní ve formátu PNG
-                    */
-
-                      // Načtení JPEG/JPG obrázku
-                        $fileImg = $file->getFile('image');
-                        $image = Image::fromFile($fileImg->getTemporaryFile());
-
-                        // Ověření, že je soubor nahrán a má správný typ
-                        if (!$fileImg || $fileImg->isOK() && $fileImg->getContentType() !== 'image/jpeg'&& $fileImg->getContentType() !== 'image/jpg') {
-                         throw new BadRequestException('Invalid image file');
-                            }
-
-                         // Uložení obrázku ve formátu PNG do dočasného souboru
-                        $tmpFile = tempnam(sys_get_temp_dir(), 'image_') . '.png';
-
-                        $image->save($tmpFile, 100); // 100 je kvalita PNG
-
-                        // Získání původního názvu obrázku
-                        $basename = pathinfo($fileImg->getUntrustedName(), PATHINFO_FILENAME);
-
-                         // Vracení PNG obrázku jako odpověď
-                        $this->sendResponse(new FileResponse($tmpFile, $basename .'.png','image/png'));
-                    
-                }elseif(isset($file->post['savePngBtn']))
-                { 
-                    /**
-                    * Uložení do složky www/uploads/png
-                    */
-                    
-                    $fileImg = $file->getFile('image');
+                    $fileImg = $data->image;
 
                     if (!$fileImg || $fileImg->isOK() && $fileImg->getContentType() !== 'image/jpeg'&& $fileImg->getContentType() !== 'image/jpg') {
                         throw new BadRequestException('Invalid image file');
@@ -140,9 +151,6 @@ final class ImgApiPresenter extends Nette\Application\UI\Presenter
                     } else {
                         $this->flashMessage("Obrázek byl nahrán bez změny formátu.", 'success');
                     }
-                }
-        };
-
-        return $form;
+                
     }
 }
