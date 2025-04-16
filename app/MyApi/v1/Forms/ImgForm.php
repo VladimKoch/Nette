@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\MyApi\v1\Forms;
 
 
-use Nette;
+
 use Nette\Application\UI\Form;
-use Tomaj\Form\Renderer;
+
 
 
 class ImgForm

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Presentation\Home;
 
 use Nette;
-// use App\Model\ArticleManager;
+
 
 final class HomePresenter extends Nette\Application\UI\Presenter
 {   
@@ -24,11 +24,6 @@ final class HomePresenter extends Nette\Application\UI\Presenter
         
             // Získání aktuálně přihlášeného uživatele
             $user = $this->getUser();
-
-            // echo '<pre>';
-            // print_r($user->getIdentity());
-            // echo '</pre>';
-            // die;
             
             // Zkontrolujte, zda je uživatel přihlášen
             if ($user->isLoggedIn()) {
@@ -51,17 +46,12 @@ final class HomePresenter extends Nette\Application\UI\Presenter
     public function handleClick(): void
     {   
         
-        
         if($this->isAjax()){
             
             bdump($this->isAjax());
             $time = 'ogon';
             $this->template->time = $time;
             $this->redrawControl('mySnippet');
-            // $flashMessage = 'je to ajax';
-            
-            
-            // $this->sendJson(['ok' => true, 'message' => $flashMessage]);
   
         }else{
             $this->flashMessage('Neni AJax');
